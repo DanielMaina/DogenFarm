@@ -1,0 +1,290 @@
+/* eslint-disable prefer-template */
+import { ChainId, JSBI, Percent, Token, WETH } from '@pancakeswap-libs/sdk'
+
+export const ROUTER_ADDRESS = '0xF03B6DAD0e06e6c542CF88596355f91922f69bA7'
+
+
+// a list of tokens by chain
+type ChainTokenList = {
+  readonly [chainId in ChainId]: Token[]
+}
+
+export const GlobalConst = {
+  blacklists: {
+    TOKEN_BLACKLIST: [
+      '0x495c7f3a713870f68f8b418b355c085dfdc412c3',
+      '0xc3761eb917cd790b30dad99f6cc5b4ff93c4f9ea',
+      '0xe31debd7abff90b06bca21010dd860d8701fd901',
+      '0xfc989fbb6b3024de5ca0144dc23c18a063942ac1',
+      '0xf4eda77f0b455a12f3eb44f8653835f377e36b76',
+    ],
+    PAIR_BLACKLIST: [
+      '0xb6a741f37d6e455ebcc9f17e2c16d0586c3f57a5',
+      '0x97cb8cbe91227ba87fc21aaf52c4212d245da3f8',
+    ],
+  },
+  addresses: {
+    ROUTER_ADDRESS: {
+      [ChainId.MAINNET]: '0xa5E0829CaCEd8fFDD4De3c43696c57F7D7A678ff', // TODO: DogeChain
+    },
+    ZERO_ADDRESS: '0x0000000000000000000000000000000000000000',
+    LAIR_ADDRESS: '0xf28164a485b0b2c90639e47b0f377b4a438a16b1',
+    NEW_LAIR_ADDRESS: '0x958d208Cdf087843e9AD98d23823d32E17d723A1',
+    QUICK_ADDRESS: '0x831753DD7087CaC61aB5644b308642cc1c33Dc13',
+    NEW_QUICK_ADDRESS: '0xB5C064F955D8e7F38fE0460C556a72987494eE17',
+    FACTORY_ADDRESS: '0x5757371414417b8C6CAad45bAeF941aBc7d3Ab32',
+    GOVERNANCE_ADDRESS: '0x5e4be8Bc9637f0EAA1A755019e06A68ce081D58F', 
+    MERKLE_DISTRIBUTOR_ADDRESS: {
+      // TODO: specify merkle distributor for mainnet
+      [ChainId.MAINNET]: '0x4087F566796b46eEB01A38174c06E2f9924eAea8'
+    },
+    QUICK_CONVERSION: '0x333068d06563a8dfdbf330a0e04a9d128e98bf5a',
+  },
+  utils: {
+    QUICK_CONVERSION_RATE: 1000,
+    ONEDAYSECONDS: 60 * 60 * 24,
+    DQUICKFEE: 0.04,
+    DQUICKAPR_MULTIPLIER: 0.01,
+    ROWSPERPAGE: 10,
+    FEEPERCENT: 0.003,
+    BUNDLE_ID: '1',
+    PROPOSAL_LENGTH_IN_DAYS: 7, // TODO this is only approximate, it's actually based on blocks
+    NetworkContextName: 'NETWORK',
+    INITIAL_ALLOWED_SLIPPAGE: 50, // default allowed slippage, in bips
+    DEFAULT_DEADLINE_FROM_NOW: 60 * 20, // 20 minutes, denominated in seconds
+    BIG_INT_ZERO: JSBI.BigInt(0),
+    ONE_BIPS: new Percent(JSBI.BigInt(1), JSBI.BigInt(10000)), // one basis point
+    BIPS_BASE: JSBI.BigInt(10000),
+    // used to ensure the user doesn't send so much ETH so they end up with <.01
+    MIN_ETH: JSBI.exponentiate(JSBI.BigInt(10), JSBI.BigInt(16)), // .01 ETH
+    BETTER_TRADE_LINK_THRESHOLD: new Percent(
+      JSBI.BigInt(75),
+      JSBI.BigInt(10000),
+    ),
+    // the Uniswap Default token list lives here
+    // we add '' to remove the possibility of nulls
+    DEFAULT_TOKEN_LIST_URL: process.env.REACT_APP_TOKEN_LIST_DEFAULT_URL + '',
+    DEFAULT_LP_FARMS_LIST_URL:
+      process.env.REACT_APP_STAKING_LIST_DEFAULT_URL + '',
+    DEFAULT_DUAL_FARMS_LIST_URL:
+      process.env.REACT_APP_DUAL_STAKING_LIST_DEFAULT_URL + '',
+    DEFAULT_SYRUP_LIST_URL: process.env.REACT_APP_SYRUP_LIST_DEFAULT_URL + '',
+    ANALYTICS_TOKENS_COUNT: 200,
+    ANALYTICS_PAIRS_COUNT: 400,
+  },
+  analyticChart: {
+    ONE_MONTH_CHART: 1,
+    THREE_MONTH_CHART: 2,
+    SIX_MONTH_CHART: 3,
+    ONE_YEAR_CHART: 4,
+    ALL_CHART: 5,
+    CHART_COUNT: 60, // limit analytics chart items not more than 60
+  },
+  farmIndex: {
+    LPFARM_INDEX: 0,
+    DUALFARM_INDEX: 1,
+  },
+  walletName: {
+    METAMASK: 'Metamask'
+  },
+};
+
+export const GlobalValue = {
+  percents: {
+    ALLOWED_PRICE_IMPACT_LOW: new Percent( // used for warning states
+      JSBI.BigInt(100),
+      GlobalConst.utils.BIPS_BASE,
+    ), // 1%
+    ALLOWED_PRICE_IMPACT_MEDIUM: new Percent(
+      JSBI.BigInt(300),
+      GlobalConst.utils.BIPS_BASE,
+    ), // 3%
+    ALLOWED_PRICE_IMPACT_HIGH: new Percent(
+      JSBI.BigInt(500),
+      GlobalConst.utils.BIPS_BASE,
+    ), // 5%
+    PRICE_IMPACT_WITHOUT_FEE_CONFIRM_MIN: new Percent( // if the price slippage exceeds this number, force the user to type 'confirm' to execute
+      JSBI.BigInt(1000),
+      GlobalConst.utils.BIPS_BASE,
+    ), // 10%
+    BLOCKED_PRICE_IMPACT_NON_EXPERT: new Percent( // for non expert mode disable swaps above this
+      JSBI.BigInt(1500),
+      GlobalConst.utils.BIPS_BASE,
+    ), // 15%
+  },
+  tokens: {
+    MAINNET: WETH[ChainId.MAINNET],
+    COMMON: {
+      EMPTY: new Token(
+        ChainId.MAINNET,
+        '0x0000000000000000000000000000000000000000',
+        0,
+        'EMPTY',
+        'EMPTY',
+      ),
+      USDC: new Token(
+        ChainId.MAINNET,
+        '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174',
+        6,
+        'USDC',
+        'USDC',
+      ),
+      USDT: new Token(
+        ChainId.MAINNET,
+        '0xc2132D05D31c914a87C6611C10748AEb04B58e8F',
+        6,
+        'USDT',
+        'Tether USD',
+      ),
+      OLD_QUICK: new Token(
+        ChainId.MAINNET,
+        GlobalConst.addresses.QUICK_ADDRESS,
+        18,
+        'QUICK(OLD)',
+        'Quickswap(OLD)',
+      ),
+      NEW_QUICK: new Token(
+        ChainId.MAINNET,
+        GlobalConst.addresses.NEW_QUICK_ADDRESS,
+        18,
+        'QUICK(NEW)',
+        'QuickSwap(NEW)',
+      ),
+      OLD_DQUICK: new Token(
+        ChainId.MAINNET,
+        '0xf28164A485B0B2C90639E47b0f377b4a438a16B1',
+        18,
+        'dQUICK',
+        'Dragon QUICK',
+      ),
+      NEW_DQUICK: new Token(
+        ChainId.MAINNET,
+        '0x958d208Cdf087843e9AD98d23823d32E17d723A1',
+        18,
+        'dQUICK',
+        'Dragon QUICK',
+      ),
+      WBTC: new Token(
+        ChainId.MAINNET,
+        '0x1BFD67037B42Cf73acF2047067bd4F2C47D9BfD6',
+        8,
+        'wBTC',
+        'Wrapped Bitcoin',
+      ),
+      DAI: new Token(
+        ChainId.MAINNET,
+        '0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063',
+        18,
+        'DAI',
+        'Dai Stablecoin',
+      ),
+      ETHER: new Token(
+        ChainId.MAINNET,
+        '0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619',
+        18,
+        'ETH',
+        'Ether',
+      ),
+      CXETH: new Token(
+        ChainId.MAINNET,
+        '0xfe4546feFe124F30788c4Cc1BB9AA6907A7987F9',
+        18,
+        'cxETH',
+        'CelsiusX Wrapped ETH',
+      ),
+      MI: new Token(
+        ChainId.MAINNET,
+        '0xa3Fa99A148fA48D14Ed51d610c367C61876997F1',
+        18,
+        'MAI',
+        'miMAINNET',
+      ),
+      SAND: new Token(
+        ChainId.MAINNET,
+        '0xBbba073C31bF03b8ACf7c28EF0738DeCF3695683',
+        18,
+        'SAND',
+        'SAND',
+      ),
+      MAUSDC: new Token(
+        ChainId.MAINNET,
+        '0x9719d867A500Ef117cC201206B8ab51e794d3F82',
+        6,
+        'maUSDC',
+        'Matic Aave interest bearing USDC',
+      ),
+      FRAX: new Token(
+        ChainId.MAINNET,
+        '0x45c32fA6DF82ead1e2EF74d17b76547EDdFaFF89',
+        18,
+        'FRAX',
+        'FRAX',
+      ),
+      GHST: new Token(
+        ChainId.MAINNET,
+        '0x385eeac5cb85a38a9a07a70c73e0a3271cfb54a7',
+        18,
+        'GHST',
+        'Aavegotchi GHST Token',
+      ),
+    },
+  },
+};
+
+const WETH_ONLY: ChainTokenList = {
+  [ChainId.MAINNET]: [WETH[ChainId.MAINNET]],
+  [ChainId.TESTNET]: [WETH[ChainId.TESTNET]],
+}
+
+// used to construct intermediary pairs for trading
+export const BASES_TO_CHECK_TRADES_AGAINST: ChainTokenList = {
+  ...WETH_ONLY,
+  [ChainId.MAINNET]: [...WETH_ONLY[ChainId.MAINNET]],
+}
+
+/**
+ * Some tokens can only be swapped via certain pairs, so we override the list of bases that are considered for these
+ * tokens.
+ */
+export const CUSTOM_BASES: { [chainId in ChainId]?: { [tokenAddress: string]: Token[] } } = {
+  [ChainId.MAINNET]: {},
+}
+
+// used for display in the default list when adding liquidity
+export const SUGGESTED_BASES: ChainTokenList = {
+  ...WETH_ONLY,
+  [ChainId.MAINNET]: [...WETH_ONLY[ChainId.MAINNET]],
+}
+
+// used to construct the list of all pairs we consider by default in the frontend
+export const BASES_TO_TRACK_LIQUIDITY_FOR: ChainTokenList = {
+  ...WETH_ONLY,
+  [ChainId.MAINNET]: [...WETH_ONLY[ChainId.MAINNET]],
+}
+
+export const PINNED_PAIRS: { readonly [chainId in ChainId]?: [Token, Token][] } = {
+  [ChainId.MAINNET]: [
+  ],
+}
+
+export const NetworkContextName = 'NETWORK'
+
+// default allowed slippage, in bips
+export const INITIAL_ALLOWED_SLIPPAGE = 80
+// 20 minutes, denominated in seconds
+export const DEFAULT_DEADLINE_FROM_NOW = 60 * 20
+
+// one basis point
+export const ONE_BIPS = new Percent(JSBI.BigInt(1), JSBI.BigInt(10000))
+export const BIPS_BASE = JSBI.BigInt(10000)
+// used for warning states
+export const ALLOWED_PRICE_IMPACT_LOW: Percent = new Percent(JSBI.BigInt(100), BIPS_BASE) // 1%
+export const ALLOWED_PRICE_IMPACT_MEDIUM: Percent = new Percent(JSBI.BigInt(300), BIPS_BASE) // 3%
+export const ALLOWED_PRICE_IMPACT_HIGH: Percent = new Percent(JSBI.BigInt(500), BIPS_BASE) // 5%
+// if the price slippage exceeds this number, force the user to type 'confirm' to execute
+export const PRICE_IMPACT_WITHOUT_FEE_CONFIRM_MIN: Percent = new Percent(JSBI.BigInt(1000), BIPS_BASE) // 10%
+// for non expert mode disable swaps above this
+export const BLOCKED_PRICE_IMPACT_NON_EXPERT: Percent = new Percent(JSBI.BigInt(1500), BIPS_BASE) // 15%
+
+// used to ensure the user doesn't send so much ETH so they end up with <.01
+export const MIN_ETH: JSBI = JSBI.exponentiate(JSBI.BigInt(10), JSBI.BigInt(16)) // .01 ETH
