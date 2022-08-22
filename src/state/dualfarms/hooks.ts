@@ -1,11 +1,9 @@
-/* eslint-disable lines-between-class-members */
-/* eslint-disable import/no-duplicates */
-import { ChainId } from '@pancakeswap-libs/sdk';
+import { ChainId } from '@uniswap/sdk';
 import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { AppState } from 'state';
 import { DualFarmListInfo, DualStakingRaw, DualStakingBasic } from 'types';
-import { Token } from '@pancakeswap-libs/sdk';
+import { Token } from '@uniswap/sdk';
 import { getTokenFromAddress } from 'utils';
 import { TokenAddressMap, useSelectedTokenList } from 'state/lists/hooks';
 import { useTokens } from 'hooks/Tokens';
@@ -34,7 +32,7 @@ export class WrappedDualFarmInfo implements DualStakingBasic {
     chainId: ChainId,
   ) {
     this.stakingInfo = stakingInfo;
-    // TODO: Support Multichain
+    //TODO: Support Multichain
     this.chainId = chainId;
     this.stakingRewardAddress = stakingInfo.stakingRewardAddress;
     this.ended = stakingInfo.ended;
@@ -98,8 +96,8 @@ export type DualFarmInfoAddressMap = Readonly<
  * An empty result, useful as a default.
  */
 const EMPTY_LIST: DualFarmInfoAddressMap = {
-  [ChainId.MAINNET]: {},
   [ChainId.TESTNET]: {},
+  [ChainId.MAINNET]: {},
 };
 
 const dualFarmCache: WeakMap<DualFarmListInfo, DualFarmInfoAddressMap> | null =

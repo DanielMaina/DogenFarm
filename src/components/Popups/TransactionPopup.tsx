@@ -1,43 +1,67 @@
-import React, { useContext } from 'react'
-import { AlertCircle, CheckCircle } from 'react-feather'
-import { Text } from '@mozartfinance/uikit'
-import styled, { ThemeContext } from 'styled-components'
-import { useActiveWeb3React } from '../../hooks'
-import { getBscScanLink } from '../../utils'
-import { ExternalLink } from '../Shared'
-import { AutoColumn } from '../Column'
-import { AutoRow } from '../Row'
+import React, { useEffect } from 'react';
+import { Box, LinearProgress } from '@material-ui/core';
+import { useActiveWeb3React } from 'hooks';
+import { getEtherscanLink } from 'utils/index';
+import { ReactComponent as ArrowTopRight } from 'assets/images/ArrowTopRight.svg';
 
-const RowNoFlex = styled(AutoRow)`
-  flex-wrap: nowrap;
-`
+interface TransactionPopupProps {
+  hash: string;
+  pending?: boolean;
+  success?: boolean;
+  summary?: string;
+}
 
-export default function TransactionPopup({
+const TransactionPopup: React.FC<TransactionPopupProps> = ({
   hash,
+  pending,
   success,
   summary,
-}: {
-  hash: string
-  success?: boolean
-  summary?: string
-}) {
-  const { chainId } = useActiveWeb3React()
+}) => {
+  const { chainId } = useActiveWeb3React();
+  const [progress, setProgress] = React.useState(0);
 
-  const theme = useContext(ThemeContext)
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setProgress((oldProgress) => {
+        return Math.min(oldProgress + 2.5, 100);
+      });
+    }, 500);
+
+    return () => {
+      clearInterval(timer);
+    };
+  }, []);
 
   return (
-    <RowNoFlex>
-      <div style={{ paddingRight: 16 }}>
-        {success ? (
-          <CheckCircle color={theme.colors.success} size={24} />
-        ) : (
-          <AlertCircle color={theme.colors.failure} size={24} />
+    <>
+      <Box mb={1.5} className='flex justify-between items-center'>
+        <small
+          className={`weight-600 ${
+            pending ? 'text-yellow3' : success ? 'text-success' : 'text-error'
+          }`}
+        >
+          {pending ? 'Processing…' : success ? 'Confirmed' : 'Failed'}
+        </small>
+        {chainId && hash.length > 0 && (
+          <a
+            href={getEtherscanLink(chainId, hash, 'transaction')}
+            target='_blank'
+            rel='noopener noreferrer'
+          >
+            <ArrowTopRight />
+          </a>
         )}
-      </div>
-      <AutoColumn gap="8px">
-        <Text>{summary ?? `Hash: ${hash.slice(0, 8)}...${hash.slice(58, 65)}`}</Text>
-        {chainId && <ExternalLink href={getBscScanLink(chainId, hash, 'transaction')}>View on Dogechain Explorer</ExternalLink>}
-      </AutoColumn>
-    </RowNoFlex>
-  )
-}
+      </Box>
+      <small>
+        {summary ?? 'Hash: ' + hash.slice(0, 8) + '...' + hash.slice(58, 65)}
+      </small>
+      {pending && (
+        <Box className='pendingBar'>
+          <LinearProgress variant='determinate' value={progress} />
+        </Box>
+      )}
+    </>
+  );
+};
+
+export default TransactionPopup;

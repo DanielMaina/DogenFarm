@@ -1,5 +1,3 @@
-/* eslint-disable import/order */
-/* eslint-disable no-else-return */
 import {
   ChainId,
   Currency,
@@ -8,7 +6,7 @@ import {
   Price,
   WETH,
   Token,
-} from '@pancakeswap-libs/sdk';
+} from '@uniswap/sdk';
 import { useMemo } from 'react';
 import { PairState, usePairs, usePair } from 'data/Reserves';
 import { useActiveWeb3React } from 'hooks';
@@ -212,9 +210,9 @@ export default function useUSDCPrice(currency?: Currency): Price | undefined {
   ]);
 }
 
-// TODO: the majority of these functions share alot of common logic,
-// There also seems to be bugs, sometimes the CXETH Pair returns CXEth, sometimes ETH
-// Investigate more fully
+//TODO: the majority of these functions share alot of common logic,
+//There also seems to be bugs, sometimes the CXETH Pair returns CXEth, sometimes ETH
+//Investigate more fully
 export function useUSDCPrices(currencies: Currency[]): (Price | undefined)[] {
   const { chainId } = useActiveWeb3React();
   const oldQuickToken = GlobalValue.tokens.COMMON.OLD_QUICK;

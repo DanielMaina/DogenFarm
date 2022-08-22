@@ -1,9 +1,5 @@
-/* eslint-disable no-console */
-/* eslint-disable import/prefer-default-export */
-/* eslint-disable import/order */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { nanoid } from '@reduxjs/toolkit';
-import { ChainId } from '@pancakeswap-libs/sdk';
+import { ChainId } from '@uniswap/sdk';
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { getNetworkLibrary, NETWORK_CHAIN_ID } from '../connectors';
@@ -20,7 +16,7 @@ export function useFetchDualFarmListCallback(): (
   const { library } = useActiveWeb3React();
   const dispatch = useDispatch<AppDispatch>();
 
-  // TODO: support multi chain
+  //TODO: support multi chain
   const ensResolver = useCallback(
     (ensName: string) => {
       if (!library) {

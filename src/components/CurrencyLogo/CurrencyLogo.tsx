@@ -1,10 +1,7 @@
-/* eslint-disable import/order */
-/* eslint-disable import/no-unresolved */
-/* eslint-disable import/named */
-import { Currency, ETHER, Token } from '@pancakeswap-libs/sdk';
+import { Currency, ETHER, Token } from '@uniswap/sdk';
 import React, { useMemo } from 'react';
 import { Box } from '@material-ui/core';
-import EthereumLogo from 'assets/images/Currency/PolygonSwap.svg';
+import EthereumLogo from 'assets/images/Currency/wwDOGE.svg';
 import useHttpLocations from 'hooks/useHttpLocations';
 import { WrappedTokenInfo } from 'state/lists/hooks';
 import { Logo } from 'components';

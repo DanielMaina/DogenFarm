@@ -1,9 +1,9 @@
-import { ChainId } from '@pancakeswap-libs/sdk'
-import MULTICALL_ABI from './abi.json'
+import { ChainId } from '@uniswap/sdk';
+import MULTICALL_ABI from './abi.json';
 
 const MULTICALL_NETWORKS: { [chainId in ChainId]: string } = {
-  [ChainId.MAINNET]: '0xBe6f02b3962Bc54d7Ca1511e9bf92fdF3073C0Aa', // TODO
-  [ChainId.TESTNET]: '0xBe6f02b3962Bc54d7Ca1511e9bf92fdF3073C0Aa'
-}
+  [ChainId.TESTNET]: '0xc7370B1f2cba1F79D22FDA84B860879eD94B5059', //TODO: CHANGE THIS
+  [ChainId.MAINNET]: '0xc7370B1f2cba1F79D22FDA84B860879eD94B5059',
+};
 
-export { MULTICALL_ABI, MULTICALL_NETWORKS }
+export { MULTICALL_ABI, MULTICALL_NETWORKS };

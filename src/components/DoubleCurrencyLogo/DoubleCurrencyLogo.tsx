@@ -1,5 +1,4 @@
-/* eslint-disable prefer-template */
-import { Currency } from '@pancakeswap-libs/sdk';
+import { Currency } from '@uniswap/sdk';
 import React from 'react';
 import { Box } from '@material-ui/core';
 import { CurrencyLogo } from 'components';

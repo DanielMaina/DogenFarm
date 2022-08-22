@@ -1,4 +1,3 @@
-/* eslint-disable object-shorthand */
 import { createReducer } from '@reduxjs/toolkit';
 import { getVersionUpgrade, VersionUpgrade } from '@uniswap/token-lists';
 import { GlobalConst } from 'constants/index';

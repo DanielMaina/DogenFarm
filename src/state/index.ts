@@ -1,34 +1,32 @@
-import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit'
-import { save, load } from 'redux-localstorage-simple'
+import { configureStore } from '@reduxjs/toolkit';
+import { save, load } from 'redux-localstorage-simple';
+import {
+  gelatoReducers,
+  GELATO_PERSISTED_KEYS,
+} from '@gelatonetwork/limit-orders-react';
 
-import application from './application/reducer'
-import { updateVersion } from './global/actions'
-import user from './user/reducer'
-import transactions from './transactions/reducer'
-import swap from './swap/reducer'
-import mint from './mint/reducer'
-import lists from './lists/reducer'
+import application from 'state/application/reducer';
+import { updateVersion } from './global/actions';
+import user from './user/reducer';
+import transactions from './transactions/reducer';
+import swap from './swap/reducer';
+import mint from './mint/reducer';
+import lists from './lists/reducer';
 import farms from './farms/reducer';
 import dualFarms from './dualfarms/reducer';
 import syrups from './syrups/reducer';
-import burn from './burn/reducer'
-import multicall from './multicall/reducer'
-import toasts from './toasts'
-import { getThemeCache } from '../utils/theme'
+import burn from './burn/reducer';
+import multicall from './multicall/reducer';
 
-type MergedState = {
-  user: {
-    [key: string]: any
-  }
-  transactions: {
-    [key: string]: any
-  }
-}
-const PERSISTED_KEYS: string[] = ['user', 'transactions', 'lists', 'farms', 'dualFarms','syrups',]
-const loadedState = load({ states: PERSISTED_KEYS }) as MergedState
-if (loadedState.user) {
-  loadedState.user.userDarkMode = getThemeCache()
-}
+const PERSISTED_KEYS: string[] = [
+  'user',
+  'transactions',
+  'lists',
+  'farms',
+  'dualFarms',
+  'syrups',
+  ...GELATO_PERSISTED_KEYS,
+];
 
 const store = configureStore({
   reducer: {
@@ -42,16 +40,19 @@ const store = configureStore({
     lists,
     farms,
     dualFarms,
-    toasts,
     syrups,
+    ...gelatoReducers,
   },
-  middleware: [...getDefaultMiddleware({ thunk: false }), save({ states: PERSISTED_KEYS })],
-  preloadedState: loadedState,
-})
+  middleware: (getDefaultMiddleware) => [
+    ...getDefaultMiddleware({ serializableCheck: false, thunk: false }),
+    save({ states: PERSISTED_KEYS }),
+  ],
+  preloadedState: load({ states: PERSISTED_KEYS }),
+});
 
-store.dispatch(updateVersion())
+store.dispatch(updateVersion());
 
-export default store
+export default store;
 
-export type AppState = ReturnType<typeof store.getState>
-export type AppDispatch = typeof store.dispatch
+export type AppState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;

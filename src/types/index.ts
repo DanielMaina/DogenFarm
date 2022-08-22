@@ -1,4 +1,4 @@
-import { TokenAmount, Token, Price, Pair } from '@pancakeswap-libs/sdk';
+import { TokenAmount, Token, Price, Pair } from '@uniswap/sdk';
 import { Version } from '@uniswap/token-lists';
 
 export interface FarmListInfo {
@@ -111,7 +111,7 @@ export interface SyrupRaw {
   lp: string;
   baseToken: string;
   rate: number;
-  ending: number; // DATE IN UNIX TIMESTAMP
+  ending: number; //DATE IN UNIX TIMESTAMP
   stakingToken: string;
 }
 
@@ -123,7 +123,7 @@ export interface SyrupBasic {
   lp: string;
   baseToken: Token;
   rate: number;
-  ending: number; // DATE IN UNIX TIMESTAMP
+  ending: number; //DATE IN UNIX TIMESTAMP
   stakingToken: Token;
 }
 

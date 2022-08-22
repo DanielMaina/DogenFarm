@@ -1,12 +1,18 @@
 {
-  "short_name": "PancakeSwap",
-  "name": "PancakeSwap",
-  "description": "Farm CAKE with Pancake LP Tokens",
+  "short_name": "QuickSwap",
+  "name": "QuickSwap Interface",
   "icons": [
     {
-      "src": "favicon.ico",
-      "type": "image/x-icon",
-      "sizes": "256x256"
+      "src": "./logo_circle.png",
+      "sizes": "50x150",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./logo_circle.png",
+      "sizes": "50x50",
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ],
   "start_url": ".",

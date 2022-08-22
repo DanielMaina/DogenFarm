@@ -1,11 +1,9 @@
-/* eslint-disable lines-between-class-members */
-/* eslint-disable import/no-duplicates */
-import { ChainId } from '@pancakeswap-libs/sdk';
+import { ChainId } from '@uniswap/sdk';
 import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { AppState } from 'state';
 import { SyrupListInfo, SyrupRaw, SyrupBasic } from 'types';
-import { Token } from '@pancakeswap-libs/sdk';
+import { Token } from '@uniswap/sdk';
 import { TokenAddressMap, useSelectedTokenList } from 'state/lists/hooks';
 import { getTokenFromAddress } from 'utils';
 import { useTokens } from 'hooks/Tokens';
@@ -31,7 +29,7 @@ export class WrappedSyrupInfo implements SyrupBasic {
     chainId: ChainId,
   ) {
     this.stakingInfo = syrupInfo;
-    // TODO: Support Multichain
+    //TODO: Support Multichain
     this.chainId = ChainId.MAINNET;
     this.stakingRewardAddress = syrupInfo.stakingRewardAddress;
     this.rate = syrupInfo.rate;
@@ -73,8 +71,8 @@ export type SyrupInfoAddressMap = Readonly<
  * An empty result, useful as a default.
  */
 const EMPTY_LIST: SyrupInfoAddressMap = {
-  [ChainId.MAINNET]: {},
   [ChainId.TESTNET]: {},
+  [ChainId.MAINNET]: {},
 };
 
 const syrupCache: WeakMap<SyrupListInfo, SyrupInfoAddressMap> | null =

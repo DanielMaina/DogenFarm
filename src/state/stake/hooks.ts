@@ -1,13 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-use-before-define */
-/* eslint-disable no-useless-return */
-/* eslint-disable no-console */
-/* eslint-disable object-shorthand */
-/* eslint-disable consistent-return */
-/* eslint-disable @typescript-eslint/no-shadow */
-/* eslint-disable prefer-destructuring */
-/* eslint-disable no-else-return */
-/* eslint-disable no-undef-init */
 import {
   CurrencyAmount,
   JSBI,
@@ -15,12 +5,12 @@ import {
   TokenAmount,
   Pair,
   ChainId,
-} from '@pancakeswap-libs/sdk';
+} from '@uniswap/sdk';
 import dayjs from 'dayjs';
 import { useMemo, useEffect } from 'react';
 import { usePairs } from 'data/Reserves';
 
-import { client } from 'apollo/client'; 
+import { client } from 'apollo/client';
 import { GLOBAL_DATA, PAIRS_BULK, PAIRS_HISTORICAL_BULK } from 'apollo/queries';
 import { GlobalConst, GlobalValue } from 'constants/index';
 import {
@@ -68,7 +58,7 @@ import { useDefaultDualFarmList } from 'state/dualfarms/hooks';
 import { useDefaultSyrupList } from 'state/syrups/hooks';
 import { Contract } from '@ethersproject/contracts';
 
-const web3 = new Web3('https://polygon-rpc.com/'); // TODO: DogeChain
+const web3 = new Web3('https://rpc-sg.dogechain.dog/');
 
 export const STAKING_GENESIS = 1620842940;
 
@@ -336,8 +326,8 @@ export function useFilteredSyrupInfo(
             totalSupplyState,
           );
           const totalRewardRate = new TokenAmount(token, JSBI.BigInt(rate));
-          // const pair = info[index].pair.toLowerCase();
-          // const fees = (pairData && pairData[pair] ? pairData[pair].oneDayVolumeUSD * 0.0025: 0);
+          //const pair = info[index].pair.toLowerCase();
+          //const fees = (pairData && pairData[pair] ? pairData[pair].oneDayVolumeUSD * 0.0025: 0);
           const rewardRate = initTokenAmountFromCallResult(
             token,
             rewardRateState,
@@ -530,8 +520,8 @@ export function useOldSyrupInfo(
             totalSupplyState,
           );
           const totalRewardRate = new TokenAmount(token, JSBI.BigInt(rate));
-          // const pair = info[index].pair.toLowerCase();
-          // const fees = (pairData && pairData[pair] ? pairData[pair].oneDayVolumeUSD * 0.0025: 0);
+          //const pair = info[index].pair.toLowerCase();
+          //const fees = (pairData && pairData[pair] ? pairData[pair].oneDayVolumeUSD * 0.0025: 0);
           const rewardRate = initTokenAmountFromCallResult(
             token,
             rewardRateState,
@@ -960,8 +950,8 @@ export function useDualStakingInfo(
             dummyToken,
             JSBI.BigInt(stakingInfo.ended ? 0 : rateB),
           );
-          // const pair = info[index].pair.toLowerCase();
-          // const fees = (pairData && pairData[pair] ? pairData[pair].oneDayVolumeUSD * 0.0025: 0);
+          //const pair = info[index].pair.toLowerCase();
+          //const fees = (pairData && pairData[pair] ? pairData[pair].oneDayVolumeUSD * 0.0025: 0);
           const totalRewardRateA01 = initTokenAmountFromCallResult(
             dummyToken,
             rewardRateAState,
@@ -1297,7 +1287,7 @@ export function useStakingInfo(
         new TokenAmount(item.tokens[1], '0'),
       );
       return lp && lp !== ''
-        ? new Token(137, lp, 18, 'SLP', 'Staked LP')
+        ? new Token(2000, lp, 18, 'SLP', 'Staked LP')
         : dummyPair.liquidityToken;
     }),
   );

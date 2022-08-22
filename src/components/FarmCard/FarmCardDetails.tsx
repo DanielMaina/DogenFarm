@@ -1,14 +1,10 @@
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable react/jsx-curly-brace-presence */
-/* eslint-disable no-console */
 import React, { useState } from 'react';
 import { TransactionResponse } from '@ethersproject/providers';
 import { Box, useMediaQuery } from '@material-ui/core';
 import { useTheme } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
 import { StakingInfo, DualStakingInfo } from 'types';
-import { TokenAmount, Pair } from '@pancakeswap-libs/sdk';
+import { TokenAmount, Pair } from '@uniswap/sdk';
 import { unwrappedToken } from 'utils/wrappedCurrency';
 import { usePairContract, useStakingContract } from 'hooks/useContract';
 import { useDerivedStakeInfo } from 'state/stake/hooks';

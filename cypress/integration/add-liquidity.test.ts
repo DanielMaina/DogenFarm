@@ -1,50 +1,56 @@
-describe.only('Add Liquidity', () => {
+describe('Add Liquidity', () => {
   it('loads the two correct tokens', () => {
-    cy.visit('/add/0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82/0xe9e7cea3dedca5984780bafc599bd69add087d56')
-    cy.get('#add-liquidity-input-tokena #pair').should('contain.text', 'CAKE')
-    cy.get('#add-liquidity-input-tokenb #pair').should('contain.text', 'BUSD')
-  })
+    cy.visit(
+      '/pools?currency0=0x1BFD67037B42Cf73acF2047067bd4F2C47D9BfD6&currency1=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619',
+    );
+    cy.get('#add-liquidity-input-tokena .token-symbol-container').should(
+      'contain.text',
+      'WBTC',
+    );
+    cy.get('#add-liquidity-input-tokenb .token-symbol-container').should(
+      'contain.text',
+      'ETH',
+    );
+  });
 
-  it('does not crash if CAKE is duplicated', () => {
-    cy.visit('/add/0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82/0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82')
-    cy.get('#add-liquidity-input-tokena #pair').should('contain.text', 'CAKE')
-    cy.get('#add-liquidity-input-tokenb #pair').should('not.contain.text', 'CAKE')
-  })
+  it('does not crash if ETH is duplicated', () => {
+    cy.visit(
+      '/pools?currency0=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619&currency1=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619',
+    );
+    cy.get('#add-liquidity-input-tokena .token-symbol-container').should(
+      'not.contain.text',
+      'ETH',
+    );
+    cy.get('#add-liquidity-input-tokenb .token-symbol-container').should(
+      'contain.text',
+      'ETH',
+    );
+  });
 
   it('token not in storage is loaded', () => {
-    cy.visit('/add/0xe9e7cea3dedca5984780bafc599bd69add087d56/0x7083609fce4d1d8dc0c979aab8c869ea2c873402')
-    cy.get('#add-liquidity-input-tokena #pair').should('contain.text', 'BUSD')
-    cy.get('#add-liquidity-input-tokenb #pair').should('contain.text', 'DOT')
-  })
+    cy.visit(
+      '/pools?currency0=0x64aFDF9e28946419E325d801Fb3053d8B8FFdC23&currency1=0x60bB3D364B765C497C8cE50AE0Ae3f0882c5bD05',
+    );
+    cy.get('#add-liquidity-input-tokena .token-symbol-container').should(
+      'contain.text',
+      'MEEB',
+    );
+    cy.get('#add-liquidity-input-tokenb .token-symbol-container').should(
+      'contain.text',
+      'IMX',
+    );
+  });
 
   it('single token can be selected', () => {
-    cy.visit('/add/0x7083609fce4d1d8dc0c979aab8c869ea2c873402')
-    cy.get('#add-liquidity-input-tokena #pair').should('contain.text', 'DOT')
-    cy.visit('/add/0xe9e7cea3dedca5984780bafc599bd69add087d56')
-    cy.get('#add-liquidity-input-tokena #pair').should('contain.text', 'BUSD')
-  })
-
-  it('redirects /add/token-token to add/token/token', () => {
-    cy.visit('/add/0xb290b2f9f8f108d03ff2af3ac5c8de6de31cdf6d-0xF9bA5210F91D0474bd1e1DcDAeC4C58E359AaD85')
-    cy.url().should(
-      'contain',
-      '/add/0xb290b2f9f8f108d03ff2af3ac5c8de6de31cdf6d/0xF9bA5210F91D0474bd1e1DcDAeC4C58E359AaD85'
-    )
-  })
-
-  it('redirects /add/WETH-token to /add/WETH-address/token', () => {
-    cy.visit('/add/0xc778417E063141139Fce010982780140Aa0cD5Ab-0xF9bA5210F91D0474bd1e1DcDAeC4C58E359AaD85')
-    cy.url().should(
-      'contain',
-      '/add/0xc778417E063141139Fce010982780140Aa0cD5Ab/0xF9bA5210F91D0474bd1e1DcDAeC4C58E359AaD85'
-    )
-  })
-
-  it('redirects /add/token-WETH to /add/token/WETH-address', () => {
-    cy.visit('/add/0xF9bA5210F91D0474bd1e1DcDAeC4C58E359AaD85-0xc778417E063141139Fce010982780140Aa0cD5Ab')
-    cy.url().should(
-      'contain',
-      '/add/0xF9bA5210F91D0474bd1e1DcDAeC4C58E359AaD85/0xc778417E063141139Fce010982780140Aa0cD5Ab'
-    )
-  })
-})
+    cy.visit('/pools?currency0=0x1BFD67037B42Cf73acF2047067bd4F2C47D9BfD6');
+    cy.get('#add-liquidity-input-tokena .token-symbol-container').should(
+      'contain.text',
+      'WBTC',
+    );
+    cy.visit('/pools?currency0=0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619');
+    cy.get('#add-liquidity-input-tokena .token-symbol-container').should(
+      'contain.text',
+      'ETH',
+    );
+  });
+});

@@ -1,5 +1,3 @@
-/* eslint-disable no-continue */
-/* eslint-disable no-console */
 import { SyrupListInfo } from 'types';
 import contenthashToUri from './contenthashToUri';
 import { parseENSAddress } from './parseENSAddress';
@@ -55,7 +53,7 @@ export default async function getSyrupList(
     }
 
     const json = await response.json();
-    // TODO: consider validating Json Response
+    //TODO: consider validating Json Response
     return json;
   }
   throw new Error('Unrecognized list URL protocol.');

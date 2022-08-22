@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useActiveWeb3React } from 'hooks';
@@ -48,7 +47,7 @@ export default function Updater(): null {
     Object.keys(syrups).forEach((listUrl) => {
       const syrup = syrups[listUrl];
       if (syrup.current && syrup.pendingUpdate) {
-        // Auto update syrups until we create the versioning infrastructure that the tokens list has
+        //Auto update syrups until we create the versioning infrastructure that the tokens list has
         dispatch(acceptSyrupUpdate(listUrl));
       }
     });

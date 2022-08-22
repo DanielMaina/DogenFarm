@@ -1,4 +1,3 @@
-/* eslint-disable import/prefer-default-export */
 import useInView from 'react-cool-inview';
 
 export const useInfiniteLoading = (loadNext: () => void) => {

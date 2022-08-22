@@ -1,5 +1,3 @@
-/* eslint-disable import/order */
-/* eslint-disable react/jsx-curly-brace-presence */
 import React, { useState } from 'react';
 import { Box, useMediaQuery } from '@material-ui/core';
 import { useTheme } from '@material-ui/core/styles';

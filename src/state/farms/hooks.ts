@@ -1,13 +1,9 @@
-/* eslint-disable no-console */
-/* eslint-disable lines-between-class-members */
-/* eslint-disable import/named */
-/* eslint-disable import/no-duplicates */
-import { ChainId } from '@pancakeswap-libs/sdk';
+import { ChainId } from '@uniswap/sdk';
 import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { AppState } from 'state';
 import { FarmListInfo, StakingRaw, StakingBasic } from 'types';
-import { Token } from '@pancakeswap-libs/sdk';
+import { Token } from '@uniswap/sdk';
 import { TokenAddressMap, useSelectedTokenList } from 'state/lists/hooks';
 import { getTokenFromAddress } from 'utils';
 import { useTokens } from 'hooks/Tokens';
@@ -33,7 +29,7 @@ export class WrappedStakingInfo implements StakingBasic {
     chainId: ChainId,
   ) {
     this.stakingInfo = stakingInfo;
-    // TODO: Support Multichain
+    //TODO: Support Multichain
     this.chainId = chainId;
     this.stakingRewardAddress = stakingInfo.stakingRewardAddress;
     this.rate = stakingInfo.rate;
@@ -85,8 +81,8 @@ export type StakingInfoAddressMap = Readonly<
  * An empty result, useful as a default.
  */
 const EMPTY_LIST: StakingInfoAddressMap = {
-  [ChainId.MAINNET]: {},
   [ChainId.TESTNET]: {},
+  [ChainId.MAINNET]: {},
 };
 
 const farmCache: WeakMap<FarmListInfo, StakingInfoAddressMap> | null =
